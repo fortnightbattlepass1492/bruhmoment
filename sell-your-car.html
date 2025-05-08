@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Your Car | Coastal Motors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        :root {
+            --bg: #f4f7fa;
+            --surface: #ffffff;
+            --primary: #006dff;
+            --text: #222;
+            --muted: #566;
+            --radius: 12px;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        header {
+            background: var(--primary);
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity .2s;
+        }
+        nav a:hover {
+            opacity: .8;
+        }
+        
+        /* Form Container */
+        .container {
+            width: min(95%, 800px);
+            margin: 2rem auto;
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        /* Form Styles */
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem 1.5rem;
+        }
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: .25rem;
+            font-size: .9rem;
+            color: var(--muted);
+        }
+        input, textarea, select {
+            padding: .6rem .75rem;
+            border: 1px solid #d0d7e4;
+            border-radius: 8px;
+            font-size: .95rem;
+            width: 100%;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .full {
+            grid-column: 1 / -1;
+        }
+        input[type="file"] {
+            font-size: .9rem;
+        }
+        
+        /* Button */
+        button {
+            grid-column: 1 / -1;
+            margin-top: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: .75rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .25s;
+        }
+        button:hover {
+            background: #0057d6;
+        }
+        
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #e7f7ee;
+            color: #2a6b46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo"><i class="fa-solid fa-car"></i> Coastal Motors</div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="inventory.html">Inventory</a></li>
+                <li><a href="sell-your-car.html" style="opacity:.8;text-decoration:underline;">Sell Your Car</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Sell Your Car</h1>
+        <form id="sellCarForm" enctype="multipart/form-data">
+            <!-- Basic Info -->
+            <label for="make">Make <input type="text" id="make" name="make" required></label>
+            <label for="model">Model <input type="text" id="model" name="model" required></label>
+            <label for="year">Year <input type="number" id="year" name="year" min="1900" max="2030" required></label>
+            <label for="mileage">Mileage <input type="number" id="mileage" name="mileage" required></label>
+            <label for="price">Asking Price ($) <input type="number" id="price" name="price" required></label>
+            
+            <!-- Additional Details -->
+            <label for="transmission">Transmission
+                <select id="transmission" name="transmission">
+                    <option value="">Select</option>
+                    <option value="Automatic">Automatic</option>
+                    <option value="Manual">Manual</option>
+                    <option value="CVT">CVT</option>
+                </select>
+            </label>
+            
+            <label for="fuel_type">Fuel Type
+                <select id="fuel_type" name="fuel_type">
+                    <option value="">Select</option>
+                    <option value="Gas">Gas</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Electric">Electric</option>
+                </select>
+            </label>
+            
+            <label for="condition">Condition
+                <select id="condition" name="condition">
+                    <option value="">Select</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Poor">Poor</option>
+                </select>
+            </label>
+            
+            <!-- VIN and Engine -->
+            <label for="vin">VIN (Optional) <input type="text" id="vin" name="vin"></label>
+            <label for="engine_size">Engine Size (Optional) <input type="text" id="engine_size" name="engine_size" placeholder="e.g. 2.0L"></label>
+            
+            <!-- Description -->
+            <label class="full" for="summary">Summary <input type="text" id="summary" name="summary" placeholder="Brief description of your vehicle"></label>
+            <label class="full" for="description">Detailed Description <textarea id="description" name="description" rows="4" placeholder="Include any additional details about your vehicle's condition, history, features, etc."></textarea></label>
+            
+            <!-- Image Upload -->
+            <label class="full" for="image">Upload Photo <input type="file" id="image" name="image" accept="image/*"></label>
+            
+            <button type="submit">Submit Your Vehicle</button>
+        </form>
+        
+        <div id="successMessage" class="success-message">
+            <i class="fa-solid fa-check-circle"></i> Thank you! Your vehicle information has been submitted successfully. Our team will contact you shortly.
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Coastal Motors. All Rights Reserved.</p>
+    </footer>
+    
+    <script>
+        document.getElementById('sellCarForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('http://localhost:4000/api/cars', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('Car submitted successfully:', result);
+                
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                this.reset();
+                
+                // Scroll to success message
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+                
+            } catch (error) {
+                console.error('Error submitting car:', error);
+                alert('There was an error submitting your vehicle information. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

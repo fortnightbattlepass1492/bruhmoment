@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Coastal Motors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f7fa;
+      --surface: #ffffff;
+      --primary: #006dff;
+      --text: #222;
+      --muted: #565e6b;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+    body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    header { background: var(--primary); color: #fff; padding: 1rem 2rem; display: flex; align-items: center; gap: 8px; font-size: 1.5rem; font-weight: 700; }
+
+    main { width: min(95%, 800px); margin: 2rem auto; background: var(--surface); border-radius: var(--radius); box-shadow: 0 4px 14px rgba(0, 0, 0, .08); padding: 2rem; }
+    h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem 1.5rem; }
+    label { display: flex; flex-direction: column; gap: .25rem; font-size: .9rem; color: var(--muted); }
+    input[type="text"], input[type="number"], select { padding: .6rem .75rem; border: 1px solid #d0d7e4; border-radius: 8px; font-size: .95rem; }
+    input[type="file"] { font-size: .9rem; }
+
+    .full { grid-column: 1 / -1; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+    .checkbox-group label { flex-direction: row; gap: 4px; align-items: center; }
+
+    button { grid-column: 1 / -1; margin-top: .5rem; background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: .75rem 1rem; font-weight: 600; cursor: pointer; transition: background .25s; }
+    button:hover { background: #0057d6; }
+
+    /* Simple table for existing cars (optional) */
+    table { margin-top: 2rem; width: 100%; border-collapse: collapse; font-size: .85rem; }
+    th, td { padding: .5rem; border-bottom: 1px solid #e0e6f0; text-align: left; }
+    th { background: #fafbfc; }
+    td.actions { width: 80px; }
+    .delete-btn { background: #ff6b6b; color: #fff; border: none; border-radius: 6px; padding: .35rem .6rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header><i class="fa-solid fa-gear"></i> Admin Panel</header>
+  <main>
+    <h1>Add / Edit Vehicle</h1>
+    <form id="carForm" enctype="multipart/form-data">
+      <!-- Core -->
+      <label>Make <input type="text" name="make" required></label>
+      <label>Model <input type="text" name="model" required></label>
+      <label>Year <input type="number" name="year" min="1900" required></label>
+      <label>Price ($) <input type="number" name="price" required></label>
+      <label>Mileage (mi) <input type="number" name="mileage"></label>
+
+      <!-- Body & Mechanical -->
+      <label>Body Type
+        <select name="bodyType">
+          <option value="">Select</option>
+          <option>Sedan</option><option>SUV</option><option>Coupe</option>
+          <option>Truck</option><option>Hatchback</option><option>Van</option>
+        </select>
+      </label>
+      <label>Fuel Type
+        <select name="fuel">
+          <option value="">Select</option>
+          <option>Gas</option><option>Diesel</option><option>Hybrid</option><option>Electric</option>
+        </select>
+      </label>
+      <label>Doors
+        <select name="doors">
+          <option value="">Any</option><option>2</option><option>3</option><option>4</option>
+        </select>
+      </label>
+
+      <!-- Colors -->
+      <label>Exterior Color <input type="text" name="exteriorColor" placeholder="e.g. Red"></label>
+      <label>Interior Color <input type="text" name="interiorColor" placeholder="e.g. Black"></label>
+
+      <!-- History -->
+      <div class="full">
+        <span style="font-size:.9rem;color:var(--muted);">Vehicle History</span>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="history" value="clean"> Clean Title</label>
+          <label><input type="checkbox" name="history" value="accidentFree"> No Accidents</label>
+          <label><input type="checkbox" name="history" value="oneOwner"> One Owner</label>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="full">
+        <span style="font-size:.9rem;color:var(--muted);">Features</span>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="features" value="Bluetooth"> Bluetooth</label>
+          <label><input type="checkbox" name="features" value="Backup Camera"> Backup Camera</label>
+          <label><input type="checkbox" name="features" value="Leather Seats"> Leather Seats</label>
+          <label><input type="checkbox" name="features" value="Sunroof"> Sunroof</label>
+          <label><input type="checkbox" name="features" value="Heated Seats"> Heated Seats</label>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <label class="full">Photo <input type="file" name="image"></label>
+
+      <button type="submit"><i class="fa-solid fa-plus"></i> Save Vehicle</button>
+    </form>
+
+    <!-- Existing Cars (optional list) -->
+    <table id="carsTable">
+      <thead>
+        <tr><th>Make</th><th>Model</th><th>Year</th><th>Price</th><th class="actions">Del</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <script>
+    async function fetchCars() {
+      try {
+        const res = await fetch('http://localhost:4000/api/cars');
+        const cars = await res.json();
+        const tbody = document.querySelector('#carsTable tbody');
+        tbody.innerHTML = '';
+        cars.forEach(car => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${car.make}</td><td>${car.model}</td><td>${car.year}</td><td>$${Number(car.price).toLocaleString()}</td><td class="actions"><button class="delete-btn" data-id="${car._id}">X</button></td>`;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error('Error fetching cars:', err);
+        alert('Could not load cars. Please check if the server is running.');
+      }
+    }
+
+    // Handle submit - using FormData for multipart/form-data (for image uploads)
+    document.getElementById('carForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      
+      // Handle checkboxes for features and history (multiple values)
+      const features = formData.getAll('features');
+      const history = formData.getAll('history');
+      
+      try {
+        const response = await fetch('http://localhost:4000/api/cars', {
+          method: 'POST',
+          body: formData // FormData automatically sets the correct Content-Type
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        console.log('Car added successfully:', result);
+        form.reset();
+        fetchCars();
+        alert('Vehicle added successfully!');
+      } catch (err) {
+        console.error('Error adding car:', err);
+        alert('Failed to add vehicle. Please try again.');
+      }
+    });
+
+    // Handle delete
+    document.addEventListener('click', async e => {
+      if (e.target.matches('.delete-btn')) {
+        const id = e.target.dataset.id;
+        if (confirm('Delete this vehicle?')) {
+          try {
+            const response = await fetch(`http://localhost:4000/api/cars/${id}`, { 
+              method: 'DELETE' 
+            });
+            
+            if (!response.ok) {
+              throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+            }
+            
+            fetchCars();
+            alert('Vehicle deleted successfully!');
+          } catch (err) {
+            console.error('Error deleting car:', err);
+            alert('Failed to delete vehicle. Please try again.');
+          }
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', fetchCars);
+  </script>
+</body>
+</html>
